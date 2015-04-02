@@ -19,8 +19,10 @@ var unicodeClass = function (abbrev) {
 };
 
 // Special handlebars-reserved identifiers, usually starting with '@'
-// Other candidates to be in this list: '@last', '@first', '@key'
-var reservedIds = ['@index'];
+var reservedIds = [
+  '@index', '@first', '@last', '@even', '@odd', '@index_1', '@key',
+  '@args', '@state'
+];
 
 // See ECMA-262 spec, 3rd edition, Section 7.6
 // Match one or more characters that can start an identifier.

@@ -21,6 +21,7 @@ Tinytest.add("spacebars-compiler - stache tags", function (test) {
 
   run('{{foo}}', {type: 'DOUBLE', path: ['foo'], args: []});
   run('{{foo3}}', {type: 'DOUBLE', path: ['foo3'], args: []});
+
   run('{{{foo}}}', {type: 'TRIPLE', path: ['foo'], args: []});
   run('{{{foo}}', "Expected `}}}`");
   run('{{{foo', "Expected");
@@ -72,6 +73,26 @@ Tinytest.add("spacebars-compiler - stache tags", function (test) {
               ['PATH', ['a', 'b', 'c']],
               ['PATH', ['qux'], 'baz'],
               ['PATH', ['.'], 'x3']]});
+
+  run('{{helper (subhelper ./arg) arg.sub (@args.passedHelper)}}', {
+    type: 'DOUBLE', path: ['helper'],
+    args: [
+      [
+        'EXPR', {
+          type: "EXPR", path: ["subhelper"],
+          args: [["PATH", [".", "arg"]]]
+        }
+      ], [
+        "PATH", ["arg", "sub"]
+      ], [
+        "EXPR", {
+          type: "EXPR",
+          path: ["@args", "passedHelper"],
+          args: []
+        }
+      ]
+    ]
+  });
 
   run('{{{x 0.3 [0].[3] .4 ./[4]}}}',
       {type: 'TRIPLE', path: ['x'],
